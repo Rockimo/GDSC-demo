@@ -97,7 +97,7 @@ class CalcButton extends StatelessWidget {
         child: Text(str,),
         onPressed: () {
           if ('+-*/'.contains(str)) state.operation(str);
-          if (str == '=') state.operation('');
+          else if (str == '=') state.operation('');
           else if (str == 'clr') state.clr();
           else if (str == 'del') state.delete();
           else if (str == 'prv') state.prv();
