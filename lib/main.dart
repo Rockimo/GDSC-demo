@@ -111,7 +111,6 @@ class CalcButton extends StatelessWidget {
 class CalcState extends ChangeNotifier {
   double _firstnumber = 0;
   String _secondnumber = '0';
-  bool _decimalpoint = false;
   String _op = '';
   double _answer = 0;
 
@@ -147,7 +146,7 @@ class CalcState extends ChangeNotifier {
       default:
         assert(false);
     }
-    if(op != '') _answer = _firstnumber;
+    if(_op != '') _answer = _firstnumber;
     _op = op;
     notifyListeners();
   }
@@ -155,6 +154,7 @@ class CalcState extends ChangeNotifier {
   void prv() {
     _secondnumber = '$_firstnumber';
     _firstnumber = 0;
+    _op = '';
     notifyListeners();
   }
 
@@ -167,7 +167,6 @@ class CalcState extends ChangeNotifier {
     //reset CalcState
     _firstnumber = 0;
     _secondnumber = '0';
-    _decimalpoint = false;
     _op = '';
     _answer = 0;
     notifyListeners();
@@ -175,8 +174,7 @@ class CalcState extends ChangeNotifier {
 
   void append(String digit) {
     if (digit == '.') {
-      if (_decimalpoint == true) return;
-      _decimalpoint = true;
+      if (_secondnumber.contains('.') == true) return;
       _secondnumber = '$_secondnumber$digit';
     } else {
       assert(digit.length == 1 && '0123456789'.contains(digit));
@@ -194,7 +192,6 @@ class CalcState extends ChangeNotifier {
     if (len == 1) {
       _secondnumber = '0';
     } else {
-      if (_secondnumber[len - 1] == '.') _decimalpoint = false;
       _secondnumber = _secondnumber.substring(0, len - 1);
     }
     notifyListeners();
