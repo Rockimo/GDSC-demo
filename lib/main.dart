@@ -2,6 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//without trailing zeros
+String doubleToString(double x) {
+  var s = '$x';
+  if (s.toString().endsWith('.0')) return s.split('.')[0];
+  else return s;
+}
+
 void main() {
   runApp(
     ChangeNotifierProvider(
@@ -37,7 +44,7 @@ void main() {
                   builder: (context, state, child) => Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text('${state.firstnumber}',),
+                      Text(doubleToString(state.firstnumber),),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -151,15 +158,18 @@ class CalcState extends ChangeNotifier {
     notifyListeners();
   }
 
+  //maar nu heeft dit geen handige functie
+  //make this remember a list of values
+  //right now it works like cancel operation which is also good
   void prv() {
-    _secondnumber = '$_firstnumber';
+    _secondnumber = doubleToString(_firstnumber);
     _firstnumber = 0;
     _op = '';
     notifyListeners();
   }
 
   void ans() {
-    _secondnumber = '$_answer';
+    _secondnumber = doubleToString(_answer);
     notifyListeners();
   }
 
